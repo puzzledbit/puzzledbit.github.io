@@ -1,4 +1,5 @@
+# This site has moved to https://puzzledbit.com. Pages here only redirect.
 User-agent: *
 Allow: /
 
-Sitemap: https://puzzledbit.github.io/sitemap.xml
+Sitemap: https://puzzledbit.com/sitemap.xml
