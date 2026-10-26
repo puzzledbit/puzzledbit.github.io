@@ -1,5 +1,4 @@
 {
-  "title": "Résumé",
   "summary": "Infrastructure-focused engineer with iOS/macOS experience, working across build systems, CI/CD, and release workflows to make mobile teams faster and more reliable.",
   "skills": {
     "title": "Skills",
@@ -9,7 +8,10 @@
       "iOS Development",
       "Objective-C",
       "Swift",
+      "Python",
+      "Ruby",
       "CI/CD",
+      "Infrastructure",
       "Build Optimization",
       "Architecture Design"
     ]

@@ -3,7 +3,6 @@
 function renderPostNotFound(container) {
     container.innerHTML = `
         <section class="page-head">
-            <p class="eyebrow">Writing</p>
             <h1 class="page-title">Post not found</h1>
             <p class="page-lead">This post doesn't exist or has moved.</p>
             <div class="page-actions">

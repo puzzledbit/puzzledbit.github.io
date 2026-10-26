@@ -21,7 +21,7 @@
   },
   "nav": [
     { "label": "Home", "href": "index.html", "page": "home" },
-    { "label": "Résumé", "href": "resume.html", "page": "resume" },
+    { "label": "CV", "href": "cv.html", "page": "cv" },
     { "label": "Writing", "href": "blog.html", "page": "blog", "requiresPosts": true }
   ],
   "terminal": {
@@ -36,7 +36,6 @@
     ]
   },
   "focus": {
-    "eyebrow": "Focus",
     "title": "What I work on",
     "items": [
       {
@@ -66,14 +65,13 @@
     ]
   },
   "sections": {
-    "experience": { "eyebrow": "Career", "title": "Experience" },
-    "posts": { "eyebrow": "Writing", "title_home": "Latest posts", "title_all": "Writing" }
+    "experience": { "title": "Experience" },
+    "posts": { "title_home": "Latest posts", "title_all": "Writing" }
   },
   "contact": {
-    "eyebrow": "Contact",
     "title": "Let's talk",
     "description": "Open to conversations about build systems, developer tooling and mobile infrastructure.",
-    "email": "puzzledbit@gmail.com",
+    "email": "vadimsmal@icloud.com",
     "social": [
       { "name": "GitHub", "icon": "github", "url": "https://github.com/puzzledbit" },
       { "name": "LinkedIn", "icon": "linkedin", "url": "https://www.linkedin.com/in/vadim-smal" }

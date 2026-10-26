@@ -1,12 +1,9 @@
-// Renders the home, résumé and blog pages from data/*.json into <main id="main">.
+// Renders the home, CV and blog pages from data/*.json into <main id="main">.
 
-function sectionHead(eyebrow, title, extra = '') {
+function sectionHead(title, extra = '') {
     return `
         <div class="section-head" data-reveal>
-            <div>
-                <p class="eyebrow">${escapeHTML(eyebrow)}</p>
-                <h2 class="section-title">${escapeHTML(title)}</h2>
-            </div>
+            <h2 class="section-title">${escapeHTML(title)}</h2>
             ${extra}
         </div>
     `;
@@ -59,7 +56,7 @@ function renderHero(main, cv) {
                 </p>
                 <p class="hero-summary hero-in" style="--i:3">${escapeHTML(cv.summary)}</p>
                 <div class="hero-actions hero-in" style="--i:4">
-                    <a class="btn btn-primary" href="resume.html">View résumé ${icon('arrowRight', 'icon btn-arrow')}</a>
+                    <a class="btn btn-primary" href="cv.html">View CV ${icon('arrowRight', 'icon btn-arrow')}</a>
                     <a class="btn btn-ghost" href="#contact">Get in touch</a>
                     <div class="hero-social">${socialLinks(main, 'icon-link')}</div>
                 </div>
@@ -96,7 +93,7 @@ function renderFocus(main) {
     const { focus } = main;
     return `
         <section class="section" id="focus">
-            ${sectionHead(focus.eyebrow, focus.title)}
+            ${sectionHead(focus.title)}
             <div class="focus-grid">
                 ${focus.items.map(item => `
                     <article class="card focus-card spotlight" data-reveal>
@@ -136,10 +133,10 @@ function renderTimeline(items) {
 
 function renderExperience(main, cv) {
     const { experience } = main.sections;
-    const link = `<a class="text-link" href="resume.html" data-reveal>Full résumé ${icon('arrowRight', 'icon btn-arrow')}</a>`;
+    const link = `<a class="text-link" href="cv.html" data-reveal>Full CV ${icon('arrowRight', 'icon btn-arrow')}</a>`;
     return `
         <section class="section" id="experience">
-            ${sectionHead(experience.eyebrow, experience.title, link)}
+            ${sectionHead(experience.title, link)}
             ${renderTimeline(cv.experience.items)}
         </section>
     `;
@@ -168,7 +165,7 @@ function renderLatestPosts(main, posts) {
     const link = `<a class="text-link" href="blog.html" data-reveal>All posts ${icon('arrowRight', 'icon btn-arrow')}</a>`;
     return `
         <section class="section" id="posts">
-            ${sectionHead(titles.eyebrow, titles.title_home, link)}
+            ${sectionHead(titles.title_home, link)}
             ${renderPostList(posts.slice(0, 3))}
         </section>
     `;
@@ -180,7 +177,6 @@ function renderContact(main) {
         <section class="section" id="contact">
             <div class="card contact-card" data-reveal>
                 <div class="contact-glow" aria-hidden="true"></div>
-                <p class="eyebrow">${escapeHTML(contact.eyebrow)}</p>
                 <h2 class="section-title">${escapeHTML(contact.title)}</h2>
                 <p class="contact-text">${escapeHTML(contact.description)}</p>
                 <div class="contact-actions">
@@ -210,31 +206,30 @@ function renderHome(main, cv, posts) {
     ].join('');
 }
 
-function renderResume(main, cv) {
+function renderCV(main, cv) {
     const { header, contact } = main;
     return `
         <section class="page-head">
-            <p class="eyebrow hero-in" style="--i:0">${escapeHTML(cv.title)}</p>
-            <h1 class="page-title hero-in" style="--i:1">${escapeHTML(header.name)}</h1>
-            <p class="page-subtitle hero-in" style="--i:2">${escapeHTML(header.role)} · ${escapeHTML(header.location)}</p>
-            <p class="page-lead hero-in" style="--i:3">${escapeHTML(cv.summary)}</p>
-            <div class="page-actions hero-in" style="--i:4">
-                <button class="btn btn-primary print-resume" type="button">${icon('printer')}Save as PDF</button>
+            <h1 class="page-title hero-in" style="--i:0">${escapeHTML(header.name)}</h1>
+            <p class="page-subtitle hero-in" style="--i:1">${escapeHTML(header.role)} · ${escapeHTML(header.location)}</p>
+            <p class="page-lead hero-in" style="--i:2">${escapeHTML(cv.summary)}</p>
+            <div class="page-actions hero-in" style="--i:3">
+                <button class="btn btn-primary print-cv" type="button">${icon('printer')}Save as PDF</button>
                 <a class="btn btn-ghost" href="mailto:${escapeHTML(contact.email)}">${icon('mail')}Email me</a>
             </div>
         </section>
-        <div class="resume-layout">
-            <section class="resume-main">
-                <h2 class="resume-heading" data-reveal>${escapeHTML(cv.experience.title)}</h2>
+        <div class="cv-layout">
+            <section class="cv-main">
+                <h2 class="cv-heading" data-reveal>${escapeHTML(cv.experience.title)}</h2>
                 ${renderTimeline(cv.experience.items)}
             </section>
-            <aside class="resume-side">
-                <div class="card resume-card" data-reveal>
-                    <h2 class="resume-heading">${escapeHTML(cv.skills.title)}</h2>
+            <aside class="cv-side">
+                <div class="card cv-card" data-reveal>
+                    <h2 class="cv-heading">${escapeHTML(cv.skills.title)}</h2>
                     <div class="tag-list">${cv.skills.items.map(skill => `<span class="tag">${escapeHTML(skill)}</span>`).join('')}</div>
                 </div>
-                <div class="card resume-card" data-reveal>
-                    <h2 class="resume-heading">${escapeHTML(cv.education.title)}</h2>
+                <div class="card cv-card" data-reveal>
+                    <h2 class="cv-heading">${escapeHTML(cv.education.title)}</h2>
                     ${cv.education.items.map(edu => `
                         <div class="education-item">
                             <div class="education-icon">${icon('graduation')}</div>
@@ -246,8 +241,8 @@ function renderResume(main, cv) {
                         </div>
                     `).join('')}
                 </div>
-                <div class="card resume-card resume-links" data-reveal>
-                    <h2 class="resume-heading">Links</h2>
+                <div class="card cv-card cv-links" data-reveal>
+                    <h2 class="cv-heading">Links</h2>
                     <a class="text-link" href="mailto:${escapeHTML(contact.email)}">${icon('mail')}${escapeHTML(contact.email)}</a>
                     ${contact.social.map(link => `
                         <a class="text-link" href="${escapeHTML(link.url)}" target="_blank" rel="noopener">${icon(link.icon)}${escapeHTML(link.url.replace(/^https?:\/\/(www\.)?/, ''))}</a>
@@ -265,9 +260,8 @@ function renderBlog(main, posts) {
         : `<div class="card empty-state" data-reveal><p>No posts yet. Check back soon.</p></div>`;
     return `
         <section class="page-head">
-            <p class="eyebrow hero-in" style="--i:0">${escapeHTML(titles.eyebrow)}</p>
-            <h1 class="page-title hero-in" style="--i:1">${escapeHTML(titles.title_all)}</h1>
-            <p class="page-lead hero-in" style="--i:2">Notes on build systems, CI/CD and mobile infrastructure.</p>
+            <h1 class="page-title hero-in" style="--i:0">${escapeHTML(titles.title_all)}</h1>
+            <p class="page-lead hero-in" style="--i:1">Notes on build systems, CI/CD and mobile infrastructure.</p>
         </section>
         <section class="section section-tight">${body}</section>
     `;
@@ -302,14 +296,14 @@ async function initializePage() {
             initLayout(page),
             page === 'blog' ? Promise.resolve(null) : loadJSON('./data/cv.json')
         ]);
-        if (page !== 'blog' && !cv) throw new Error('Failed to load résumé data');
+        if (page !== 'blog' && !cv) throw new Error('Failed to load CV data');
 
-        if (page === 'resume') container.innerHTML = renderResume(main, cv);
+        if (page === 'cv') container.innerHTML = renderCV(main, cv);
         else if (page === 'blog') container.innerHTML = renderBlog(main, posts);
         else container.innerHTML = renderHome(main, cv, posts);
 
         initCopyEmail(container);
-        container.querySelector('.print-resume')?.addEventListener('click', () => window.print());
+        container.querySelector('.print-cv')?.addEventListener('click', () => window.print());
         initAnimations(container);
     } catch (error) {
         console.error('Error initializing page:', error);

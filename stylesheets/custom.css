@@ -583,28 +583,10 @@ main:focus {
 
 .section-head {
   display: flex;
-  align-items: flex-end;
+  align-items: baseline;
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 32px;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--accent);
-}
-
-.eyebrow::before {
-  content: "";
-  width: 18px;
-  height: 1px;
-  background: currentColor;
 }
 
 .section-title {
@@ -1176,10 +1158,6 @@ main:focus {
   z-index: 1;
 }
 
-.contact-card .eyebrow {
-  justify-content: center;
-}
-
 .contact-glow {
   position: absolute;
   inset: auto -20% -60% -20%;
@@ -1234,7 +1212,7 @@ main:focus {
   margin-top: 28px;
 }
 
-/* ---------- Page head (résumé, blog, post, 404) ---------- */
+/* ---------- Page head (CV, blog, post, 404) ---------- */
 
 .page-head {
   padding-top: 88px;
@@ -1269,9 +1247,9 @@ main:focus {
   margin-top: 28px;
 }
 
-/* ---------- Résumé ---------- */
+/* ---------- CV ---------- */
 
-.resume-layout {
+.cv-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 340px;
   gap: 48px;
@@ -1279,7 +1257,7 @@ main:focus {
   align-items: start;
 }
 
-.resume-heading {
+.cv-heading {
   margin-bottom: 24px;
   font-size: 13px;
   font-family: var(--font-mono);
@@ -1289,7 +1267,7 @@ main:focus {
   color: var(--text-faint);
 }
 
-.resume-side {
+.cv-side {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1297,11 +1275,11 @@ main:focus {
   top: calc(var(--header-h) + 24px);
 }
 
-.resume-card {
+.cv-card {
   padding: 24px;
 }
 
-.resume-card .resume-heading {
+.cv-card .cv-heading {
   margin-bottom: 16px;
 }
 
@@ -1338,13 +1316,13 @@ main:focus {
   color: var(--text-faint);
 }
 
-.resume-links {
+.cv-links {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.resume-links .resume-heading {
+.cv-links .cv-heading {
   margin-bottom: 6px;
 }
 
@@ -1578,11 +1556,11 @@ main:focus {
     transform: none;
   }
 
-  .resume-layout {
+  .cv-layout {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .resume-side {
+  .cv-side {
     position: static;
   }
 }
@@ -1633,10 +1611,19 @@ main:focus {
     font-size: 15px;
   }
 
-  .terminal-body {
-    font-size: 11.5px;
-    padding: 14px 14px 18px;
-    min-height: 0;
+  /* Dates and tenure stack instead of wrapping with a dangling separator */
+  .timeline-meta {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline-tenure::before {
+    display: none;
+  }
+
+  /* The terminal is a desktop flourish; on phones it only pushes content down */
+  .hero-visual {
+    display: none;
   }
 
   .post-row {
@@ -1697,7 +1684,7 @@ main:focus {
   }
 }
 
-/* ---------- Print (résumé "Save as PDF") ---------- */
+/* ---------- Print (CV "Save as PDF") ---------- */
 
 @media print {
   :root,
@@ -1751,13 +1738,13 @@ main:focus {
     box-shadow: none;
   }
 
-  .resume-layout {
+  .cv-layout {
     grid-template-columns: minmax(0, 1fr) 240px;
     gap: 28px;
     margin-top: 28px;
   }
 
-  .resume-side {
+  .cv-side {
     position: static;
   }
 
