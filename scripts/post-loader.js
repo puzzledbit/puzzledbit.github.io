@@ -1,122 +1,71 @@
-// Function to load post content
-async function loadPost() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get('id');
+// Renders a single post (post.html?id=...) from data/posts.json + posts/<file>.md
 
-    if (!postId) {
-        window.location.href = 'index.html';
-        return;
-    }
-
-    const postsData = await loadJSON('./data/posts.json');
-    if (!postsData) {
-        window.location.href = 'index.html';
-        return;
-    }
-
-    const posts = postsData.posts || [];
-    const post = posts.find(p => p.id === postId);
-    if (!post) {
-        window.location.href = 'index.html';
-        return;
-    }
-
-    // Load main data for site header
-    const mainData = await loadJSON('./data/main.json');
-    const siteName = mainData?.header?.name || 'My Blog';
-
-    // Update page title
-    document.title = `${post.title} | ${siteName}`;
-
-    // Populate header
-    if (mainData?.header) {
-        const hero = document.getElementById('hero');
-        if (hero) {
-            hero.innerHTML = `
-                <div class="hero-card">
-                    <div class="rune-field"></div>
-                    <div class="particle-field"></div>
-                    <div class="hero">
-                        <div class="hero-avatar">
-                            <img src="${mainData.header.avatar}" alt="${mainData.header.name} avatar">
-                        </div>
-                        <div class="hero-text">
-                            <div class="hero-name">${mainData.header.name}</div>
-                            <div class="hero-meta">
-                                <span class="hero-role">${mainData.header.role}</span>
-                                <span class="hero-location">📍 ${mainData.header.location}</span>
-                            </div>
-                            <div class="hero-badge">${mainData.header.title}</div>
-                            <div class="hero-tagline">${mainData.header.tagline}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-    }
-
-    // Load post content from markdown file
-    const postContent = document.getElementById('post-content');
-    if (postContent) {
-        const markdownContent = await loadMarkdown(`./posts/${post.file}`);
-        postContent.innerHTML = `
-            <a href="javascript:history.back()" class="btn close-btn">←</a>
-            <div class="post-header">
-                <div class="post-date">${new Date(post.date).toLocaleDateString()}</div>
+function renderPostNotFound(container) {
+    container.innerHTML = `
+        <section class="page-head">
+            <p class="eyebrow">Writing</p>
+            <h1 class="page-title">Post not found</h1>
+            <p class="page-lead">This post doesn't exist or has moved.</p>
+            <div class="page-actions">
+                <a class="btn btn-primary" href="blog.html">${icon('arrowLeft')}All posts</a>
             </div>
-            <div class="post-body">
-                ${markdownContent}
-            </div>
-        `;
-        // Move post content below the main content
-        document.querySelector('.main-content').appendChild(postContent);
+        </section>
+    `;
+}
 
-        initReadingProgress();
-    }
+function readingTime(html) {
+    const words = html.replace(/<[^>]+>/g, ' ').trim().split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.round(words / 220));
 }
 
 // Fixed bar at the top showing scroll progress through the post
 function initReadingProgress() {
     const bar = document.createElement('div');
     bar.className = 'reading-progress';
-    const fill = document.createElement('div');
-    fill.className = 'reading-progress-fill';
-    bar.appendChild(fill);
+    bar.setAttribute('aria-hidden', 'true');
     document.body.appendChild(bar);
-
-    let rafId = null;
-    const update = () => {
+    onScrollFrame(() => {
         const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0;
-        fill.style.width = `${progress}%`;
-        rafId = null;
-    };
-    window.addEventListener('scroll', () => {
-        if (rafId) return;
-        rafId = window.requestAnimationFrame(update);
+        const progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+        bar.style.transform = `scaleX(${progress})`;
     });
-    window.addEventListener('resize', () => {
-        if (rafId) return;
-        rafId = window.requestAnimationFrame(update);
-    });
-    update();
 }
 
-// Load footer content
-async function loadFooter() {
-    const data = await loadJSON('./data/main.json');
-    if (data) {
-        document.getElementById('footer-credits').innerHTML = `
-            ╔══════════════════╗<br>
-            ${data.footer.copyright}<br>
-            ${data.footer.tagline}<br>
-            ╚══════════════════╝
-        `;
+async function loadPost() {
+    const container = document.getElementById('main');
+    const { main, posts } = await initLayout('blog');
+    const postId = new URLSearchParams(window.location.search).get('id');
+    const post = posts.find(p => p.id === postId);
+    if (!post) {
+        renderPostNotFound(container);
+        return;
     }
+
+    document.title = `${post.title} — ${main.header.name}`;
+    const html = await loadMarkdown(`./posts/${post.file}`);
+
+    container.innerHTML = `
+        <article class="post">
+            <header class="post-head">
+                <a class="text-link back-link hero-in" style="--i:0" href="blog.html">${icon('arrowLeft')}All posts</a>
+                <h1 class="page-title hero-in" style="--i:1">${escapeHTML(post.title)}</h1>
+                <p class="post-meta hero-in" style="--i:2">
+                    <time datetime="${escapeHTML(post.date)}">${formatPostDate(post.date)}</time>
+                    <span>${readingTime(html)} min read</span>
+                </p>
+            </header>
+            <div class="prose hero-in" style="--i:3">${html}</div>
+        </article>
+    `;
+
+    // The post title is rendered above; drop a duplicate leading <h1> from the markdown
+    const prose = container.querySelector('.prose');
+    if (prose.firstElementChild?.tagName === 'H1') prose.firstElementChild.remove();
+
+    initReadingProgress();
+    initAnimations(container);
 }
 
-// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    loadPost();
-    loadFooter();
+    loadPost().catch(error => console.error('Error loading post:', error));
 });

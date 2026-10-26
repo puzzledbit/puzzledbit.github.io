@@ -1,21 +1,21 @@
 {
-  "title": "📜 Adventurer's Dossier",
+  "title": "Résumé",
   "summary": "Infrastructure-focused engineer with iOS/macOS experience, working across build systems, CI/CD, and release workflows to make mobile teams faster and more reliable.",
   "skills": {
-    "title": "⚡ Dark Arts & Spells",
+    "title": "Skills",
     "items": [
-      "⚒️ Xcode Build System",
-      "🔮 Bazel",
-      "🌙 iOS Development",
-      "🛡️ Objective-C",
-      "⚔️ Swift",
-      "🏹 CI/CD",
-      "⚗️ Build Optimization",
-      "🏛️ Architecture Design"
+      "Xcode Build System",
+      "Bazel",
+      "iOS Development",
+      "Objective-C",
+      "Swift",
+      "CI/CD",
+      "Build Optimization",
+      "Architecture Design"
     ]
   },
   "experience": {
-    "title": "🗺️ Quest Log",
+    "title": "Experience",
     "items": [
       {
         "company": "Spotify",
@@ -40,7 +40,7 @@
     ]
   },
   "education": {
-    "title": "📚 Training Grounds",
+    "title": "Education",
     "items": [
       {
         "school": "Samara State Aerospace University",

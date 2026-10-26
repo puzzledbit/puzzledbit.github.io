@@ -1,42 +1,86 @@
 {
-  "header": {
-    "title": "⚔️ Infra Spellcaster ⚔️",
-    "name": "Vadim Smal",
-    "role": "Senior Engineer",
-    "location": "UK",
-    "avatar": "assets/avatar.jpg",
-    "tagline": "Software Archmage",
-    "navigation": []
+  "site": {
+    "brand": "puzzledbit",
+    "url": "https://puzzledbit.github.io"
   },
-  "sections": {
-    "resume": {
-      "title": "📜 Adventurer's Dossier"
-    },
-    "posts": {
-      "title_home": "📖 My Latest Chronicles",
-      "title_all": "📖 Chronicles"
+  "header": {
+    "name": "Vadim Smal",
+    "role": "Senior Software Engineer",
+    "location": "United Kingdom",
+    "avatar": "assets/avatar.jpg",
+    "headline": {
+      "prefix": "I build",
+      "rotating": [
+        "build systems",
+        "CI/CD pipelines",
+        "release workflows",
+        "developer tooling"
+      ],
+      "suffix": "that make mobile teams faster."
     }
   },
-  "contact": {
-    "title": "🕯️ Send a Message",
-    "description": "Want to start a new quest together? Let's join forces!",
-    "social": [
+  "nav": [
+    { "label": "Home", "href": "index.html", "page": "home" },
+    { "label": "Résumé", "href": "resume.html", "page": "resume" },
+    { "label": "Writing", "href": "blog.html", "page": "blog", "requiresPosts": true }
+  ],
+  "terminal": {
+    "title": "zsh — ~/mobile",
+    "lines": [
+      { "prompt": true, "text": "bazel build //apps/ios:App --config=ci" },
+      { "text": "INFO: Analyzed target //apps/ios:App (1,284 packages loaded)." },
+      { "text": "INFO: Found 1 target..." },
+      { "text": "INFO: Elapsed time: 41.8s, Critical Path: 37.2s" },
+      { "text": "INFO: 1,920 processes: 1,688 remote cache hit." },
+      { "text": "INFO: Build completed successfully.", "type": "success" }
+    ]
+  },
+  "focus": {
+    "eyebrow": "Focus",
+    "title": "What I work on",
+    "items": [
       {
-        "name": "🦉 Send Raven",
-        "url": "mailto:puzzledbit@gmail.com"
+        "icon": "layers",
+        "title": "Build systems",
+        "description": "Bazel and the Xcode build system: build graphs, caching and build-time optimization for large iOS codebases.",
+        "tags": ["Bazel", "Xcode"]
       },
       {
-        "name": "🏰 GitHub Castle",
-        "url": "https://github.com/puzzledbit"
+        "icon": "workflow",
+        "title": "CI/CD & release",
+        "description": "Pipelines and release workflows that keep shipping predictable and reliable.",
+        "tags": ["CI/CD", "Release"]
       },
       {
-        "name": "👑 LinkedIn Kingdom",
-        "url": "https://www.linkedin.com/in/vadim-smal"
+        "icon": "device",
+        "title": "iOS & macOS",
+        "description": "Native development in Swift and Objective-C, from product features to platform code.",
+        "tags": ["Swift", "Objective-C"]
+      },
+      {
+        "icon": "compass",
+        "title": "Architecture",
+        "description": "Designing project structure and tooling so mobile teams can move fast without breaking things.",
+        "tags": ["Architecture", "Productivity"]
       }
+    ]
+  },
+  "sections": {
+    "experience": { "eyebrow": "Career", "title": "Experience" },
+    "posts": { "eyebrow": "Writing", "title_home": "Latest posts", "title_all": "Writing" }
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let's talk",
+    "description": "Open to conversations about build systems, developer tooling and mobile infrastructure.",
+    "email": "puzzledbit@gmail.com",
+    "social": [
+      { "name": "GitHub", "icon": "github", "url": "https://github.com/puzzledbit" },
+      { "name": "LinkedIn", "icon": "linkedin", "url": "https://www.linkedin.com/in/vadim-smal" }
     ]
   },
   "footer": {
     "copyright": "© 2025 puzzledbit",
-    "tagline": "Made with ♥ and ✨"
+    "tagline": "Built with plain HTML, CSS and JavaScript."
   }
-} 
+}
